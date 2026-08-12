@@ -1,4 +1,5 @@
-const api = (path, options = {}) => fetch(path, { headers: { 'Content-Type': 'application/json', ...(options.headers || {}) }, ...options }).then(async (response) => {
+const API_BASE = localStorage.getItem('simpati_api_base') || '';
+const api = (path, options = {}) => fetch(`${API_BASE}${path}`, { headers: { 'Content-Type': 'application/json', ...(options.headers || {}) }, ...options }).then(async (response) => {
   if (!response.ok) throw new Error((await response.json().catch(() => ({}))).message || `HTTP ${response.status}`);
   return response.json();
 });
@@ -35,6 +36,7 @@ function employeeName(id) { return state.employees.find((employee) => employee.i
 function employeeOptions() { return state.employees.map((e) => `<option value="${e.id}">${e.name} — ${e.label}</option>`).join(''); }
 function field(name, label, attrs = '') { return `<label>${label}<input name="${name}" ${attrs} /></label>`; }
 function alertBox(text, type = 'info') { return `<div class="alert ${type}">${text}</div>`; }
+function stepper(items, active) { return `<ol class="stepper">${items.map((item, index) => `<li class="${index <= active ? 'active' : ''}"><span>${index + 1}</span>${item}</li>`).join('')}</ol>`; }
 
 function cameraPanel(mode) {
   return `<section class="camera-card">
@@ -51,7 +53,7 @@ function cameraPanel(mode) {
 function renderKiosk() {
   stopCamera();
   app.innerHTML = `<main class="kiosk hero-pattern"><section class="welcome-card">
-    <p class="eyebrow">Pemerintah Kabupaten Ciamis</p><h1>DISKOMINFO CIAMIS</h1><h2>Selamat Datang</h2><p class="lead">Sistem Buku Tamu & Reservasi Terintegrasi</p>
+    <p class="eyebrow">Pemerintah Kabupaten Ciamis</p><h1>DISKOMINFO CIAMIS</h1><h2>Selamat Datang</h2><p class="lead">Sistem Buku Tamu & Reservasi Terintegrasi</p><div class="preview-flow"><span>1. Pilih layanan</span><span>2. Scan wajah / isi data</span><span>3. Konfirmasi</span><span>4. Tiket / check-in berhasil</span></div>
     <div class="kiosk-actions">
       <button onclick="navigate('guest-book')" class="big-action"><span>📷</span><strong>Buku Tamu</strong><small>Face recognition & check-in</small></button>
       <button onclick="navigate('reservation')" class="big-action"><span>📅</span><strong>Reservasi</strong><small>Availability, tiket QR</small></button>
@@ -60,7 +62,7 @@ function renderKiosk() {
 }
 
 function renderGuestBook(recognizedGuest = null) {
-  app.innerHTML = `<main class="flow-page"><button class="back" onclick="navigate('kiosk')">← Kembali</button><section class="two-column">${cameraPanel('recognize')}
+  app.innerHTML = `<main class="flow-page"><button class="back" onclick="navigate('kiosk')">← Kembali</button>${stepper(['Scan Wajah','Data Tamu','Keperluan','Check-in'], recognizedGuest ? 1 : 0)}<section class="two-column">${cameraPanel('recognize')}
     <form class="panel" onsubmit="appActions.submitVisit(event)">
       ${recognizedGuest ? alertBox(`Wajah dikenali. Selamat datang, ${recognizedGuest.name}.`, 'success') : alertBox('Jika wajah belum terdaftar, isi data tamu baru dan sistem akan menyimpan face embedding.', 'warning')}
       <h2>${recognizedGuest ? 'Form Tamu Lama' : 'Registrasi Tamu Baru'}</h2>
@@ -76,7 +78,7 @@ async function renderReservation() {
   const date = document.querySelector('[name="date"]')?.value || '2026-08-20';
   const employeeId = Number(document.querySelector('[name="employeeId"]')?.value || state.employees[0]?.id || 1);
   const slots = await api(`/api/availability?employee_id=${employeeId}&date=${date}`);
-  app.innerHTML = `<main class="flow-page"><button class="back" onclick="navigate('kiosk')">← Kembali</button><section class="panel wide"><h2>Buat Reservasi</h2><p class="lead dark">Sistem mengecek agenda dan reservasi agar tidak terjadi double booking.</p>
+  app.innerHTML = `<main class="flow-page"><button class="back" onclick="navigate('kiosk')">← Kembali</button>${stepper(['Tanggal','Pegawai','Slot','Data Tamu','Tiket'], state.ticket ? 4 : 2)}<section class="panel wide"><h2>Buat Reservasi</h2><p class="lead dark">Sistem mengecek agenda dan reservasi agar tidak terjadi double booking.</p>
     <form class="reservation-grid" onsubmit="appActions.createReservation(event)">
       <label>Tanggal Kunjungan<input required type="date" name="date" value="${date}" onchange="appActions.showReservation()" /></label>
       <label>Pegawai<select required name="employeeId" onchange="appActions.showReservation()">${state.employees.map((e) => `<option ${e.id === employeeId ? 'selected' : ''} value="${e.id}">${e.name} — ${e.label}</option>`).join('')}</select></label>
@@ -92,7 +94,7 @@ function renderTicket() {
 }
 
 function renderReservationCheckin() {
-  app.innerHTML = `<main class="flow-page"><button class="back" onclick="navigate('kiosk')">← Kembali</button><section class="two-column">${cameraPanel('verify')}
+  app.innerHTML = `<main class="flow-page"><button class="back" onclick="navigate('kiosk')">← Kembali</button>${stepper(['Scan QR','Verifikasi Wajah','Check-in'], 1)}<section class="two-column">${cameraPanel('verify')}
     <form class="panel" onsubmit="appActions.reservationCheckin(event)"><h2>Check-in Reservasi</h2><label>Kode / Token QR<input required name="code" value="RSV-20260820-0001" /></label><p>Untuk produksi, tombol scan wajah memanggil <code>/api/face/verify</code> sebelum check-in.</p><button class="primary">Validasi QR + Check-in</button></form></section></main>`;
 }
 
