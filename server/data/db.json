@@ -91,6 +91,16 @@
       "status": "active",
       "createdAt": "2026-08-10T03:00:00.000Z",
       "updatedAt": "2026-08-10T03:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "name": "Lucky Hermawan",
+      "phone": "085735544336",
+      "company": "Dinas Komunikasi dan Informatika Kabupaten Ciamis",
+      "facePhoto": "",
+      "status": "active",
+      "createdAt": "2026-08-12T05:00:59.626Z",
+      "updatedAt": "2026-08-12T05:00:59.626Z"
     }
   ],
   "faceEmbeddings": [],
@@ -136,6 +146,17 @@
       "checkOutAt": "2026-08-12T10:20:00.000Z",
       "visitType": "walk-in",
       "status": "COMPLETED"
+    },
+    {
+      "id": 3,
+      "guestId": 3,
+      "employeeId": 1,
+      "purpose": "tesssssss",
+      "visitDate": "2026-08-12",
+      "checkInAt": "2026-08-12T05:00:59.626Z",
+      "checkOutAt": null,
+      "visitType": "walk-in",
+      "status": "CHECKED_IN"
     }
   ],
   "reservations": [
@@ -154,8 +175,25 @@
     }
   ],
   "checkIns": [],
-  "notifications": [],
-  "auditLogs": [],
+  "notifications": [
+    {
+      "id": 1,
+      "type": "guest.checkin",
+      "visitId": 3,
+      "createdAt": "2026-08-12T05:00:59.626Z"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": 1,
+      "userId": 1,
+      "action": "visit.checkin",
+      "meta": {
+        "visitId": 3
+      },
+      "createdAt": "2026-08-12T05:00:59.626Z"
+    }
+  ],
   "settings": {
     "serviceStart": "08:00",
     "serviceEnd": "16:00",
