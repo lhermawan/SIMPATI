@@ -1,0 +1,168 @@
+{
+  "roles": [
+    {
+      "id": 1,
+      "name": "Super Admin"
+    },
+    {
+      "id": 2,
+      "name": "Petugas Resepsionis"
+    },
+    {
+      "id": 3,
+      "name": "Admin Agenda"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Admin Diskominfo",
+      "username": "admin",
+      "roleId": 1,
+      "status": "active"
+    }
+  ],
+  "units": [
+    {
+      "id": 1,
+      "name": "Informatika"
+    },
+    {
+      "id": 2,
+      "name": "Aplikasi Informatika"
+    },
+    {
+      "id": 3,
+      "name": "Statistik dan Persandian"
+    }
+  ],
+  "employees": [
+    {
+      "id": 1,
+      "name": "Budi Santoso",
+      "nip": "19xxxxxxxxxx",
+      "position": "Kepala Bidang",
+      "unitId": 1,
+      "email": "budi@ciamiskab.go.id",
+      "phone": "08xxxx",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "name": "Deni Setiawan",
+      "nip": "19xxxxxxxxxx",
+      "position": "Pranata Komputer",
+      "unitId": 2,
+      "email": "deni@ciamiskab.go.id",
+      "phone": "08xxxx",
+      "photo": "",
+      "status": "active"
+    },
+    {
+      "id": 3,
+      "name": "Asep Supriatna",
+      "nip": "19xxxxxxxxxx",
+      "position": "Analis Statistik",
+      "unitId": 3,
+      "email": "asep@ciamiskab.go.id",
+      "phone": "08xxxx",
+      "photo": "",
+      "status": "active"
+    }
+  ],
+  "guests": [
+    {
+      "id": 1,
+      "name": "Ahmad Fauzi",
+      "phone": "081234567890",
+      "company": "PT ABC",
+      "facePhoto": "",
+      "status": "active",
+      "createdAt": "2026-08-12T03:00:00.000Z",
+      "updatedAt": "2026-08-12T03:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "name": "Siti Aminah",
+      "phone": "082112223333",
+      "company": "CV XYZ",
+      "facePhoto": "",
+      "status": "active",
+      "createdAt": "2026-08-10T03:00:00.000Z",
+      "updatedAt": "2026-08-10T03:00:00.000Z"
+    }
+  ],
+  "faceEmbeddings": [],
+  "agendas": [
+    {
+      "id": 1,
+      "employeeId": 1,
+      "date": "2026-08-20",
+      "start": "09:00",
+      "end": "10:00",
+      "title": "Rapat Pimpinan",
+      "notes": "Ruang rapat utama"
+    },
+    {
+      "id": 2,
+      "employeeId": 1,
+      "date": "2026-08-20",
+      "start": "11:00",
+      "end": "12:00",
+      "title": "Agenda Bidang",
+      "notes": "Pembahasan program"
+    }
+  ],
+  "visits": [
+    {
+      "id": 1,
+      "guestId": 1,
+      "employeeId": 1,
+      "purpose": "Konsultasi",
+      "visitDate": "2026-08-12",
+      "checkInAt": "2026-08-12T10:03:00.000Z",
+      "checkOutAt": null,
+      "visitType": "walk-in",
+      "status": "CHECKED_IN"
+    },
+    {
+      "id": 2,
+      "guestId": 2,
+      "employeeId": 2,
+      "purpose": "Koordinasi",
+      "visitDate": "2026-08-12",
+      "checkInAt": "2026-08-12T09:15:00.000Z",
+      "checkOutAt": "2026-08-12T10:20:00.000Z",
+      "visitType": "walk-in",
+      "status": "COMPLETED"
+    }
+  ],
+  "reservations": [
+    {
+      "id": 1,
+      "code": "RSV-20260820-0001",
+      "token": "demo-token-0001",
+      "guestId": 1,
+      "employeeId": 1,
+      "date": "2026-08-20",
+      "start": "10:00",
+      "end": "11:00",
+      "purpose": "Konsultasi layanan informasi",
+      "status": "CONFIRMED",
+      "createdAt": "2026-08-12T04:00:00.000Z"
+    }
+  ],
+  "checkIns": [],
+  "notifications": [],
+  "auditLogs": [],
+  "settings": {
+    "serviceStart": "08:00",
+    "serviceEnd": "16:00",
+    "slotDurationMinutes": 60,
+    "maxReservationPerSlot": 1,
+    "minReservationDays": 1,
+    "maxReservationDays": 30,
+    "cancellationLimitHours": 2
+  }
+}
