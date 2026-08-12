@@ -1,0 +1,11 @@
+{
+  "name": "simpati-diskominfo-ciamis",
+  "version": "1.0.0",
+  "description": "Sistem Buku Tamu & Reservasi Diskominfo Ciamis dengan backend Node.js dan frontend face-api.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js",
+    "check": "node --check server/index.js && node --check src/app.js"
+  }
+}
